@@ -21,6 +21,9 @@ class Barber(UserMixin, db.Model):
     def __repr__(self):
         return '<Barber {}>'.format(self.username)
 
+    def __str__(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+
 
 @login.user_loader
 def load_user(id):
@@ -30,19 +33,21 @@ def load_user(id):
 class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), index=True, unique=True)
-    description = db.Column(db.String(100))
+    description = db.Column(db.String(300))
     duration = db.Column(db.Integer)
-    price = db.Column(db.String(10))
+    price = db.Column(db.Integer)
     reservations = db.relationship('Reservation', backref='service', lazy='dynamic')
 
     def __repr__(self):
-        return '<Service {}>'.format(self.name)
+        return '{} - {} Minutes - {} RON'.format(self.name, str(self.duration), str(self.price))
+
+    def __str__(self):
+        return '{} - {} Minutes - {} RON'.format(self.name, str(self.duration), str(self.price))
 
 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, index=True)
-    time = db.Column(db.Time)
+    reservation_time = db.Column(db.DateTime, index=True)
     client_first_name = db.Column(db.String(20))
     client_last_name = db.Column(db.String(20))
     client_phone = db.Column(db.String(10), index=True)

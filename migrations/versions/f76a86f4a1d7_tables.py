@@ -1,8 +1,8 @@
-"""barber/service/reservation tables
+"""tables
 
-Revision ID: de1c54738af0
+Revision ID: f76a86f4a1d7
 Revises: 
-Create Date: 2019-05-02 13:40:26.076979
+Create Date: 2019-05-03 04:50:00.565902
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'de1c54738af0'
+revision = 'f76a86f4a1d7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,7 @@ def upgrade():
     sa.Column('first_name', sa.String(length=20), nullable=True),
     sa.Column('last_name', sa.String(length=20), nullable=True),
     sa.Column('username', sa.String(length=7), nullable=True),
+    sa.Column('password_hash', sa.String(length=128), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_barber_first_name'), 'barber', ['first_name'], unique=False)
@@ -33,7 +34,7 @@ def upgrade():
     sa.Column('name', sa.String(length=50), nullable=True),
     sa.Column('description', sa.String(length=100), nullable=True),
     sa.Column('duration', sa.Integer(), nullable=True),
-    sa.Column('price', sa.String(length=10), nullable=True),
+    sa.Column('price', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_service_name'), 'service', ['name'], unique=True)

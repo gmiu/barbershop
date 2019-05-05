@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+{% set icons = ['fas fa-cut', 'fas fa-star', 'fas fa-gem', 'fas fa-angle-down'] %}
+{% for service in services %}
+<div class="card text-center">
+  <div class="card-header">
+    <i class="{{ icons[service.id - 1] }}"></i>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ service.name }}</h5>
+    <p class="card-text">{{ service.description }}</p>
+    <p class="card-text font-italic">{{ service.price }} RON - {{ service.duration }} min</p>
+    <a href="{{ url_for('main.schedule') }}" class="btn btn-primary">Schedule</a>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

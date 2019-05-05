@@ -4,33 +4,41 @@
     {% if title %}{{ title }} - Barbershop{% else %}Welcome to Barbershop{% endif %}
 {% endblock %}
 
-{% block navbar %}
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('main.index') }}">Barbershop</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('main.index') }}">Home</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if current_user.is_anonymous %}
-                    <li>Are you a barber?<a href="{{ url_for('auth_barber.login') }}">Login here</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('auth_barber.logout') }}">Logout</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-    </nav>
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mystyle.css') }}" />
 {% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ url_for('main.index') }}">
+        <i class="fas fa-bold"></i>arbershop</a>
+    <div class="container" id="navbarNav">
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.index') }}">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.services') }}">SERVICES</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.about') }}">ABOUT US</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.contact') }}">CONTACT</a>
+            </li>
+        </ul>
+        <ul class="nav nav-pills">
+            <li>
+                <a class="nav-link" href="{{ url_for('main.schedule') }}">
+                    <i class="fas fa-calendar-alt"></i> SCHEDULE AN APPOINTMENT</a>
+            </li>
+        </ul>
+  </div>
+</nav>
+{% endblock%}
 
 {% block content %}
     <div class="container">
@@ -45,6 +53,8 @@
         {# application content needs to be provided in the app_content block #}
         {% block app_content %}{% endblock %}
     </div>
+
+
 {% endblock %}
 
 {% block scripts %}

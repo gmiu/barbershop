@@ -1,9 +1,93 @@
 {% extends "barber/base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
     <h1>Hi, {{ current_user.first_name }}!</h1>
-    {% if form %}
-    {{ wtf.quick_form(form) }}
-    <br>
-    {% endif %}
+
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#new_barber">New Barber</a>
+                </h4>
+            </div>
+        <div id="new_barber" class="panel-collapse collapse">
+            <div class="col-md-4">
+                {{ wtf.quick_form(new_barber_form) }}
+            </div>
+        </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#new_service">New Service</a>
+                </h4>
+            </div>
+            <div id="new_service" class="panel-collapse collapse">
+                <div class="col-md-4">
+                    {{ wtf.quick_form(new_service_form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Barbers</h2>
+    <table class="table" id="barbers">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for barber in barbers %}
+        <tr>
+            <th scope="row">{{ barber.id }}</th>
+            <th scope="row">{{ barber.first_name }} {{ barber.last_name }}</th>
+            <th scope="row">{{ barber.username }}</th>
+            <th scope="row">
+                <a class="btn btn-danger"
+                   role="button"
+                   href="{{ url_for('barber.delete_barber', id=barber.id) }}">
+                    Delete
+                </a>
+            </th>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Services</h2>
+    <table class="table" id="services">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Duration (min)</th>
+            <th scope="col">Price (RON)</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for service in services %}
+        <tr>
+            <th scope="row">{{ service.id }}</th>
+            <th scope="row">{{ service.name }}</th>
+            <th scope="row">{{ service.description }}</th>
+            <th scope="row">{{ service.duration }}</th>
+            <th scope="row">{{ service.price }}</th>
+            <th scope="row">
+                <a class="btn btn-danger"
+                   role="button"
+                   href="{{ url_for('barber.delete_service', id=service.id) }}">
+                    Delete
+                </a>
+            </th>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

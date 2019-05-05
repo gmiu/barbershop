@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+from flask_moment import Moment
 from config import Config
 from logging.handlers import RotatingFileHandler
 import logging
@@ -13,6 +14,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 bootstrap = Bootstrap()
 login = LoginManager()
+moment = Moment()
 
 
 def create_app(config_class=Config):
@@ -23,6 +25,7 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     bootstrap.init_app(app)
     login.init_app(app)
+    moment.init_app(app)
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
