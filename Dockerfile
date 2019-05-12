@@ -12,7 +12,7 @@ RUN venv/bin/pip install gunicorn
 
 COPY app app
 COPY migrations migrations
-COPY barbershop.py config.py boot.sh ./
+COPY barbershop.py config.py utils.py boot.sh ./
 RUN chmod +x boot.sh
 
 ENV FLASK_APP barbershop.py
