@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_moment import Moment
+from flask_mail import Mail
 from config import Config
 from logging.handlers import RotatingFileHandler
 import logging
@@ -15,6 +16,7 @@ migrate = Migrate()
 bootstrap = Bootstrap()
 login = LoginManager()
 moment = Moment()
+mail = Mail()
 
 
 def create_app(config_class=Config):
@@ -25,7 +27,10 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     bootstrap.init_app(app)
     login.init_app(app)
+    login.login_view = 'auth_barber.login'
+    login.login_message = 'Please log in to access this page.'
     moment.init_app(app)
+    mail.init_app(app)
 
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)

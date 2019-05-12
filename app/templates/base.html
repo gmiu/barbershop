@@ -7,8 +7,8 @@
 
 {% block styles %}
     {{ super() }}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mystyle.css') }}" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 {% endblock %}
 
 {% block navbar %}
@@ -32,7 +32,7 @@
         </ul>
         <ul class="nav nav-pills">
             <li>
-                <a class="nav-link" href="{{ url_for('main.schedule') }}">
+                <a class="nav-link" href="{{ url_for('main.schedule1') }}">
                     <i class="fas fa-calendar-alt"></i> SCHEDULE AN APPOINTMENT</a>
             </li>
         </ul>
@@ -53,7 +53,6 @@
         {# application content needs to be provided in the app_content block #}
         {% block app_content %}{% endblock %}
     </div>
-
 
 {% endblock %}
 

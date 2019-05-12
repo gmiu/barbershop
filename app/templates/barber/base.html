@@ -1,48 +1,21 @@
-{% extends 'bootstrap/base.html' %}
-
-{% block title %}
-    {% if title %}{{ title }} - Barbershop{% else %}Welcome to Barbershop{% endif %}
-{% endblock %}
+{% extends "base.html" %}
 
 {% block navbar %}
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('barber.index') }}">Barbershop</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('barber.index') }}">Home</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ url_for('auth_barber.logout') }}">Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-{% endblock %}
-
-{% block content %}
-    <div class="container">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-        {# application content needs to be provided in the app_content block #}
-        {% block app_content %}{% endblock %}
-    </div>
-{% endblock %}
-
-{% block scripts %}
-    {{ super() }}
-{% endblock %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{ url_for('barber.index') }}">
+        <i class="fas fa-bold"></i>arbershop <i class="fab fa-amilia"></i>dmin</a>
+    <div class="container" id="navbarNav">
+        <ul class="nav nav-pills nav-fill">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('barber.index') }}">HOME</a>
+            </li>
+        </ul>
+        <ul class="nav nav-pills">
+            <li>
+                <a class="nav-link" href="{{ url_for('auth_barber.logout') }}">
+                    <i class="fas fa-sign-out-alt"></i> LOGOUT</a>
+            </li>
+        </ul>
+  </div>
+</nav>
+{% endblock%}

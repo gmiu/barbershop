@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<h1>Schedule</h1>
+{% if schedule_form %}
+    {{ wtf.quick_form(schedule_form) }}
+{% endif %}
+{{ service }} {{ barber }} {{ reservation_date }}
+{% endblock %}

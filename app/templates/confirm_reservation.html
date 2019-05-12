@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<div class="card" style="width: 36rem;">
+    <div class="card-header">
+        Confirm Reservation for {{ reservation.client_first_name }} {{ reservation.client_last_name }}
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            Service: {{ service.name }} ({{ service.description }})
+        </li>
+        <li class="list-group-item">
+            Barber: {{ barber }}
+        </li>
+        <li class="list-group-item">
+            When: {{ reservation.reservation_time.strftime('%A, %b %d, %Y, %H:%M') }} ({{ service.duration }} minutes)
+        </li>
+        <li class="list-group-item">
+            Client Contact: {{ reservation.client_email }} / {{ reservation.client_phone }}
+        </li>
+        <li class="list-group-item">
+            <a href="{{ url_for('main.schedule1')}}" class="btn btn-danger btn-sm">Change Reservation</a>
+        </li>
+    </ul>
+</div>
+{{ wtf.quick_form(confirm_form) }}
+{% endblock %}

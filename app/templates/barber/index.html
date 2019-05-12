@@ -4,27 +4,33 @@
 {% block app_content %}
     <h1>Hi, {{ current_user.first_name }}!</h1>
 
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#new_barber">New Barber</a>
-                </h4>
+    {% if current_user.username == 'admin' %}
+    <div class="accordion" id="barber_options">
+        <div class="card">
+            <div class="card-header" id="new_barber">
+                <h2 class="mb-0">
+                    <a class="btn btn-primary" data-toggle="collapse" href="#new_barber_form" role="button" aria-expanded="false" aria-controls="new_barber_form">
+                        New Barber
+                    </a>
+                </h2>
             </div>
-        <div id="new_barber" class="panel-collapse collapse">
-            <div class="col-md-4">
-                {{ wtf.quick_form(new_barber_form) }}
+
+            <div id="new_barber_form" class="collapse" aria-labelledby="new_barber" data-parent="#barber_options">
+                <div class="card-body">
+                    {{ wtf.quick_form(new_barber_form) }}
+                </div>
             </div>
         </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#new_service">New Service</a>
-                </h4>
+        <div class="card">
+            <div class="card-header" id="new_service">
+                <h2 class="mb-0">
+                    <a class="btn btn-primary" data-toggle="collapse" href="#new_service_form" role="button" aria-expanded="false" aria-controls="new_service_form">
+                        New Service
+                    </a>
+                </h2>
             </div>
-            <div id="new_service" class="panel-collapse collapse">
-                <div class="col-md-4">
+            <div id="new_service_form" class="collapse" aria-labelledby="new_service" data-parent="#barbers_options">
+                <div class="card-body">
                     {{ wtf.quick_form(new_service_form) }}
                 </div>
             </div>
@@ -90,4 +96,31 @@
         {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <h2>Your reservations for today</h2>
+    <table class="table" id="reservations">
+        <thead>
+        <tr>
+            <th scope="col">Time</th>
+            <th scope="col">Client Name</th>
+            <th scope="col">Client Phone</th>
+            <th scope="col">Service</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Confirmation Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reservation in today_reservations %}
+        <tr>
+            <th scope="row">{{ reservation.reservation_time.strftime('%H:%M') }}</th>
+            <th scope="row">{{ reservation.client_first_name }} {{ reservation.client_last_name }}</th>
+            <th scope="row">{{ reservation.client_phone }}</th>
+            <th scope="row">{{ reservation.get_service() }}</th>
+            <th scope="row">{{ reservation.get_duration() }}</th>
+            <th scope="row">{{ reservation.confirmed_status }}</th>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 {% endblock %}
