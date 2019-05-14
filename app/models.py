@@ -9,7 +9,7 @@ class Barber(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(20), index=True)
     last_name = db.Column(db.String(20), index=True)
-    username = db.Column(db.String(7), index=True, unique=True)
+    username = db.Column(db.String(20), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     reservations = db.relationship('Reservation', backref='barber', lazy='dynamic')
 

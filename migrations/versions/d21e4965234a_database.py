@@ -1,8 +1,8 @@
-"""create
+"""database
 
-Revision ID: 1dff4ba2688e
+Revision ID: d21e4965234a
 Revises: 
-Create Date: 2019-05-06 04:00:49.397144
+Create Date: 2019-05-14 12:16:01.419059
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1dff4ba2688e'
+revision = 'd21e4965234a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('first_name', sa.String(length=20), nullable=True),
     sa.Column('last_name', sa.String(length=20), nullable=True),
-    sa.Column('username', sa.String(length=7), nullable=True),
+    sa.Column('username', sa.String(length=20), nullable=True),
     sa.Column('password_hash', sa.String(length=128), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
@@ -49,12 +49,14 @@ def upgrade():
     sa.Column('barber_id', sa.Integer(), nullable=True),
     sa.Column('service_id', sa.Integer(), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
+    sa.Column('confirmed_status', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['barber_id'], ['barber.id'], ),
     sa.ForeignKeyConstraint(['service_id'], ['service.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_reservation_client_email'), 'reservation', ['client_email'], unique=False)
     op.create_index(op.f('ix_reservation_client_phone'), 'reservation', ['client_phone'], unique=False)
+    op.create_index(op.f('ix_reservation_confirmed_status'), 'reservation', ['confirmed_status'], unique=False)
     op.create_index(op.f('ix_reservation_reservation_date'), 'reservation', ['reservation_date'], unique=False)
     op.create_index(op.f('ix_reservation_reservation_time'), 'reservation', ['reservation_time'], unique=False)
     op.create_index(op.f('ix_reservation_timestamp'), 'reservation', ['timestamp'], unique=False)
@@ -66,6 +68,7 @@ def downgrade():
     op.drop_index(op.f('ix_reservation_timestamp'), table_name='reservation')
     op.drop_index(op.f('ix_reservation_reservation_time'), table_name='reservation')
     op.drop_index(op.f('ix_reservation_reservation_date'), table_name='reservation')
+    op.drop_index(op.f('ix_reservation_confirmed_status'), table_name='reservation')
     op.drop_index(op.f('ix_reservation_client_phone'), table_name='reservation')
     op.drop_index(op.f('ix_reservation_client_email'), table_name='reservation')
     op.drop_table('reservation')

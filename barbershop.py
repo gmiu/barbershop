@@ -138,9 +138,6 @@ def make_shell_context():
             if works:
                 print('\t', hours[i])
 
-    reservation = Reservation.query.get(50)
-    barber = Barber.query.get(reservation.barber_id)
-    service = Service.query.get(reservation.service_id)
 
     return {'db': db,
             'Barber': Barber,
@@ -156,7 +153,4 @@ def make_shell_context():
             'date': date,
             'datetime': datetime,
             'timedelta': timedelta,
-            'reservation': reservation,
-            'barber': barber,
-            'service': service,
             'send_confirmation_email': send_confirmation_email}
