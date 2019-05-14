@@ -1,0 +1,39 @@
+version: '3'
+services:
+  barbershop:
+    image: eu.gcr.io/barbershop-240612/barbershop
+    container_name: barbershop
+    depends_on:
+      - postgres
+      - postfix
+    ports:
+      - "8000:5000"
+    links:
+      - postgres:dbserver
+      - postfix:mailserver
+    env_file: .env
+    entrypoint: ./boot.sh
+
+  postgres:
+    image: postgres:11.2-alpine
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    env_file: .postgresenv
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  postfix:
+    image: juanluisbaptiste/postfix
+    container_name: postfix
+    ports:
+      - "25:25"
+    env_file: .postfixenv
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/volumes/postgres
+      o: bind
