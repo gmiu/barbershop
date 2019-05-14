@@ -1,0 +1,11 @@
+Barbershop reservation for {{ reservation.client_first_name }} {{ reservation.client_last_name }} has been confirmed.
+You can find all the reservation details below.
+
+
+    Service: {{ service.name }} ({{ service.description }})
+    Barber: {{ barber }}
+    When: {{ reservation.reservation_time.strftime('%A, %b %d, %Y, %H:%M') }} ({{ service.duration }} minutes)
+
+
+Thanks you,
+Barbershop Team

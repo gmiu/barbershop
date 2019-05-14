@@ -3,6 +3,7 @@ from app.main import bp
 from flask import render_template, redirect, url_for, request, flash
 from app.models import Service, Barber, Reservation
 from app.main.forms import ScheduleForm1, ScheduleForm2, ConfirmForm
+from app.main.email import send_confirmation_email
 from datetime import datetime, timedelta, date
 from utils import create_hour
 
@@ -104,8 +105,9 @@ def confirm(id):
     confirm_form = ConfirmForm()
     if confirm_form.validate_on_submit():
         reservation.confirmed_status = True
+        send_confirmation_email(reservation=reservation, barber=barber, service=service)
         db.session.commit()
-        flash('Your reservation has been confirmed!')
+        flash('Your reservation has been confirmed! An email with the confirmation has been sent to {}.'.format(reservation.client_email))
         return redirect(url_for('main.index'))
 
     return render_template('confirm_reservation.html', title='Confirm Reservation',

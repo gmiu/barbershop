@@ -1,0 +1,7 @@
+Barbershop reservation for <b>{{ reservation.client_first_name }} {{ reservation.client_last_name }}</b>
+has been confirmed.<br><br>
+    Service: <b>{{ service.name }} ({{ service.description }})</b><br>
+    Barber: <b>{{ barber }}</b><br>
+    When: <b>{{ reservation.reservation_time.strftime('%A, %b %d, %Y, %H:%M') }} ({{ service.duration }} minutes)</b><br><br>
+Thanks you,<br>
+Barbershop Team<br>

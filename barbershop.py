@@ -2,6 +2,7 @@ from app import create_app, db
 from app.models import Barber, Service, Reservation
 from datetime import datetime, timedelta, date
 from utils import create_hour, hour_generator
+from app.main.email import send_confirmation_email
 
 app = create_app()
 
@@ -137,8 +138,9 @@ def make_shell_context():
             if works:
                 print('\t', hours[i])
 
-    bar = Barber.query.get(2)
-    hours = bar.get_hours(date.today(), 40)
+    reservation = Reservation.query.get(50)
+    barber = Barber.query.get(reservation.barber_id)
+    service = Service.query.get(reservation.service_id)
 
     return {'db': db,
             'Barber': Barber,
@@ -154,5 +156,7 @@ def make_shell_context():
             'date': date,
             'datetime': datetime,
             'timedelta': timedelta,
-            'bar': bar,
-            'hours': hours}
+            'reservation': reservation,
+            'barber': barber,
+            'service': service,
+            'send_confirmation_email': send_confirmation_email}
