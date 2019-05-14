@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.18.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: barbershop
+  name: barbershop
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: barbershop
+    spec:
+      containers:
+      - command:
+        - ./boot.sh
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: DATABASE_URL
+              name: barbershop-env
+        - name: MAIL_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: MAIL_PORT
+              name: barbershop-env
+        - name: MAIL_SERVER
+          valueFrom:
+            configMapKeyRef:
+              key: MAIL_SERVER
+              name: barbershop-env
+        image: eu.gcr.io/barbershop-240612/barbershop
+        name: barbershop
+        ports:
+        - containerPort: 5000
+        resources: {}
+      restartPolicy: Always
+status: {}
